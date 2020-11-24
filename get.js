@@ -156,6 +156,7 @@ class bboxDownload {
             clearInterval(parent.checkFileInterval);
             fs.move(loc+'/Annotation/'+id, loc+'/annotations/', function (err) {
               rimraf(loc+'/Annotation/', function () { 
+                
                 fs.unlinkSync(parent.image_path)
                 
                 parent.imageURL(parent.id,parent.name,parent.url,parent.loc,files,parent);
@@ -361,7 +362,7 @@ function getClasses(cat,level){
                   
                   if (bboxName==name){
                     //item exists as bbox
-                    dir = 'images/'+name
+                    dir = 'images/'+id
 
                     if (catCounter<maxNum&&!catExists(name)){
                       fs.mkdirSync(dir, { recursive: true });
