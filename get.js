@@ -57,7 +57,7 @@ setInterval(function(){
     }
   }
   
-}, 100);
+}, 1000);
 
 function buildIndexes(){
   console.log('build index')
@@ -219,10 +219,12 @@ class bboxDownload {
     })
   }
   download = (url, path, parent, callback) => {
-    request.head(url,{timeout: 2000},(err, res, body) => {
-      var r = request(url,{timeout: 2000})
+    //console.log(url)
+    //url = 'http://farm1.static.flickr.com/25/63599030_3cf3903627.jpg'
+    //request.head(url,(err, res, body) => {
+      var r = request(url,{timeout: 60000})
         r.on('response', function (res) {
-          //console.log(res.statusCode);
+          console.log(res.statusCode);
           if (res.statusCode === 200) {
             r.pipe(fs.createWriteStream(path))
             parent.imageLoaded++
@@ -241,7 +243,7 @@ class bboxDownload {
         r.on('error', function (res) {
           parent.outCalls--
           parent.errors++
-          //console.log(res)
+          console.log(res)
           if (parent.outCalls==0){
             //console.log('done')
             
@@ -249,7 +251,7 @@ class bboxDownload {
           }
         })
         
-    })
+    //})
   }
   
   removeBbox(image_path){
@@ -361,7 +363,7 @@ function getClasses(cat,level){
                     //item exists as bbox
                     dir = 'images/'+name
 
-                    if (catCounter<maxNum&&!catExists(name)){
+                    if (name=="abaya"&&catCounter<maxNum&&!catExists(name)){
                       fs.mkdirSync(dir, { recursive: true });
                       fs.mkdirSync(dir+'/images', { recursive: true });
                       
