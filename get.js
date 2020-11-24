@@ -363,7 +363,7 @@ function getClasses(cat,level){
                     //item exists as bbox
                     dir = 'images/'+name
 
-                    if (name=="abaya"&&catCounter<maxNum&&!catExists(name)){
+                    if (catCounter<maxNum&&!catExists(name)){
                       fs.mkdirSync(dir, { recursive: true });
                       fs.mkdirSync(dir+'/images', { recursive: true });
                       
