@@ -34,7 +34,7 @@ var arguments = process.argv.slice(2);
 maxNum = arguments[0]
 
 var display = setInterval(function(){ 
-  //console.clear()
+  console.clear()
   // alldone = true;
   // for (var i=0; i<classList.length; i++){
   //     if (classList[i].alldone==false)alldone=false
@@ -61,7 +61,7 @@ var display = setInterval(function(){
     }
   }
   
-}, 1000);
+}, 100);
 
 function buildIndexes(){
   fs.mkdirSync('class/images', { recursive: true });
@@ -94,16 +94,18 @@ function summary(){
   
 }
 function copyFiles(){
-  
+ 
   for (var i=0; i<classList.length; i++){
-    folder = classList[i].loc
-    console.log(folder+'/annotations')
+    var folder = 'images/'+classList[i].id
+    //console.log(folder+'/annotations')
     fs.readdir(folder+'/annotations/', function (err, files) {
       if (files!=undefined){
         if (files.length>0){
-          for(i=0; i<files.length; i++) {
-            file = files[i]
-            fs.move(folder+'/annotations/'+file, 'class/annotations/'+file, function (err) {
+          for(j=0; j<files.length; j++) {
+            var file = files[j]
+            var folder = file.split("_")
+            folder = folder[0]
+            fs.move('images/'+folder+'/annotations/'+file, 'class/annotations/'+file, function (err) {
             });
           } 
         }
@@ -112,9 +114,11 @@ function copyFiles(){
     fs.readdir(folder+'/images/', function (err, files) {
       if (files!=undefined){
         if (files.length>0){
-          for(i=0; i<files.length; i++) {
-            file = files[i]
-            fs.move(folder+'/images/'+file, 'class/images/'+file, function (err) {
+          for(j=0; j<files.length; j++) {
+            var file = files[j]
+            var folder = file.split("_")
+            folder = folder[0]
+            fs.move('images/'+folder+'/images/'+file, 'class/images/'+file, function (err) {
             });
           } 
         }
@@ -389,7 +393,7 @@ function getBboxList(){
 function getClasses(cat,level){
     //console.log(cat)
     loopCounter++
-    console.log('http://www.image-net.org/api/text/wordnet.structure.hyponym?wnid='+cat)
+    //console.log('http://www.image-net.org/api/text/wordnet.structure.hyponym?wnid='+cat)
     request('http://www.image-net.org/api/text/wordnet.structure.hyponym?wnid='+cat, { json: false }, (err, res, body) => {
         if (err) { return console.log(err); }
         result = body.split(/\r?\n/)
@@ -408,6 +412,7 @@ function getClasses(cat,level){
                   
                   if (bboxName==name){
                     //item exists as bbox
+                    //console.log(bboxName)
                     dir = 'images/'+id
 
                     if (catCounter<maxNum&&!catExists(name)){
