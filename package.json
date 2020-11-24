@@ -1,0 +1,42 @@
+{
+  "name": "imagenetdownloader",
+  "version": "1.0.0",
+  "description": "download images with boundingboxes from imagenet",
+  "main": "get.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "axios": "^0.21.0",
+    "fs-extra": "^9.0.1",
+    "https": "^1.0.0",
+    "line-reader": "^0.4.0",
+    "lineReader": "^0.1.2",
+    "node-wget": "^0.4.3",
+    "request": "^2.88.2",
+    "rimraf": "^3.0.2",
+    "tar-fs": "^2.1.1",
+    "tar.gz": "^1.0.7",
+    "wget-improved": "^3.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rvijgen/imagenetClass.git"
+  },
+  "keywords": [
+    "imagenet",
+    "synset",
+    "boundingboxes",
+    "VOC"
+  ],
+  "author": "Richard Vijgen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rvijgen/imagenetClass/issues"
+  },
+  "homepage": "https://github.com/rvijgen/imagenetClass#readme"
+}
