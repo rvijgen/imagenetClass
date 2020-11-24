@@ -27,29 +27,48 @@ var catNames = new Array();
 var extractMonitor = new Array();
 var classList = new Array();
 var labelList = new Array();
-var maxNum = 150;
-
+var maxNum = 10;
+var activeClass = 0;
 setInterval(function(){ 
   console.clear()
-  alldone = true;
-  for (var i=0; i<classList.length; i++){
-      if (classList[i].alldone==false)alldone=false
-      console.log(classList[i].loc+' | '+classList[i].imageCounter+' requested, '+classList[i].outCalls +' open requests ' +classList[i].imageLoaded+' downloaded | '+classList[i].fileCounter+' bbox | '+classList[i].errors+' timeouts')
+  // alldone = true;
+  // for (var i=0; i<classList.length; i++){
+  //     if (classList[i].alldone==false)alldone=false
+  //     console.log(classList[i].loc+' | '+classList[i].imageCounter+' requested, '+classList[i].outCalls +' open requests ' +classList[i].imageLoaded+' downloaded | '+classList[i].fileCounter+' bbox | '+classList[i].errors+' timeouts')
+  // }
+  // if(alldone&&classList.length>0){
+  //   console.log('alldone!')
+  //   buildIndexes()
+  // } 
+  if (classList.length>0){
+    currentObject = classList[activeClass]
+    if (currentObject.started==false)currentObject.start()
+    else if (currentObject.alldone==true){
+      //console.log('object '+activeClass+' completed')
+      if (activeClass<classList.length-1)activeClass++
+      else{
+        console.log('all done')
+        buildIndexes()
+      }
+    }else{
+      classCount = activeClass+1
+      console.log('downloading class '+classCount+' of '+classList.length )
+      console.log(currentObject.loc+' | '+currentObject.imageCounter+' requested, '+currentObject.outCalls +' open requests ' +currentObject.imageLoaded+' downloaded | '+currentObject.fileCounter+' bbox | '+currentObject.errors+' timeouts | listLoaded: '+currentObject.listLoaded+' requested: '+currentObject.listLoaded)
+    }
   }
-  if(alldone&&classList.length>0){
-    console.log('alldone!')
-    buildIndexes()
-  } 
-}, 500);
+  
+}, 100);
 
 function buildIndexes(){
   console.log('build index')
   namestxt='';
   indextxt='';
   for (var i=0; i<classList.length; i++){
-    namestxt+=classList[i].id+'\n'
-    var title = classList[i].loc.split("/")
-    indextxt+=title[1]+'\n'
+    if (classList[i].imageLoaded>0){
+      namestxt+=classList[i].id+'\n'
+      var title = classList[i].loc.split("/")
+      indextxt+=title[1]+'\n'
+    }   
   }
   fs.writeFile('images/names.txt', namestxt, function (err) {
     if (err) return console.log(err);
@@ -58,8 +77,7 @@ function buildIndexes(){
       process.exit(1)
     });
   });
-  
-  //console.log(namestxt)
+
 }
 
 class bboxDownload {
@@ -70,7 +88,7 @@ class bboxDownload {
     this.id = id;
     this.url = url;
     this.name = name;
-    this.interval = setInterval(this.checkIfDownloadExists, 500,this.loc,this);
+    this.interval;
     this.fileCounter = 0;
     this.imageCounter = 0;
     this.imageLoaded = 0;
@@ -81,7 +99,15 @@ class bboxDownload {
     this.axios = require('axios');;
     this.classRequest = require('request');
     this.alldone=false
+    this.started = false
     this.errors = 0;
+    this.listLoaded = false
+    this.listRequested = false
+  }
+  start(){
+    this.started = true
+    this.interval = setInterval(this.checkIfDownloadExists, 500,this.loc,this);
+    
   }
   checkIfDownloadExists(loc,parent){
     fs.readdir(loc, function (err, files) {
@@ -102,7 +128,7 @@ class bboxDownload {
       else{
         //console.log('extracted')
         //console.log(parent)
-        parent.checkFolderInterval = setInterval(parent.checkFolder, 500,parent.loc,parent);
+        parent.checkFolderInterval = setInterval(parent.checkFolder, 100,parent.loc,parent);
       }
     })
   }
@@ -113,7 +139,7 @@ class bboxDownload {
         if (files.length>0){
           //console.log('folder exists '+files[0])
           clearInterval(parent.checkFolderInterval);
-          parent.checkFileInterval = setInterval(parent.checkFileCount, 500,parent.loc,parent,files[0]);
+          parent.checkFileInterval = setInterval(parent.checkFileCount, 100,parent.loc,parent,files[0]);
         }
       }
     })
@@ -146,11 +172,13 @@ class bboxDownload {
 
   
   imageURL(cat,bboxName,url, target,files,parent){
-    
+    //console.log('waiting for file list')
+    parent.listRequested = true
     request('http://www.image-net.org/api/text/imagenet.synset.geturls.getmapping?wnid='+cat, { json: false }, (err, res, body) => {
       var numberOfRequests = 0;
       if (err) { return console.log(err); }
         result = body.split(/\r?\n/);
+        parent.listLoaded = true
         for (var i=0; i<result.length; i++){
           var line = result[i].split(' ');
           var name = line[0];
@@ -171,7 +199,13 @@ class bboxDownload {
             parent.downloadImg(dlUrl,target+'/images/'+name+'.jpg',parent);
           }
         }
-        if (numberOfRequests==0)parent.removeBbox(target+'/images/')
+        if (numberOfRequests==0){
+          rimraf(parent.loc, function () { 
+            console.log('remove '+parent.loc) 
+            parent.alldone = true
+          });
+
+        }
     })
   }
   downloadImg(url,image_path,parent){
@@ -185,8 +219,8 @@ class bboxDownload {
     })
   }
   download = (url, path, parent, callback) => {
-    request.head(url,{timeout: 60000},(err, res, body) => {
-      var r = request(url,{timeout: 60000})
+    request.head(url,{timeout: 2000},(err, res, body) => {
+      var r = request(url,{timeout: 2000})
         r.on('response', function (res) {
           //console.log(res.statusCode);
           if (res.statusCode === 200) {
