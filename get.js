@@ -29,6 +29,10 @@ var classList = new Array();
 var labelList = new Array();
 var maxNum = 100;
 var activeClass = 0;
+
+var arguments = process.argv.slice(2);
+maxNum = arguments[0]
+
 setInterval(function(){ 
   console.clear()
   // alldone = true;
@@ -57,7 +61,7 @@ setInterval(function(){
     }
   }
   
-}, 1000);
+}, 100);
 
 function buildIndexes(){
   console.log('build index')
@@ -66,20 +70,25 @@ function buildIndexes(){
   for (var i=0; i<classList.length; i++){
     if (classList[i].imageLoaded>0){
       namestxt+=classList[i].id+'\n'
-      var title = classList[i].loc.split("/")
-      indextxt+=title[1]+'\n'
+      var title = classList[i].name
+      indextxt+=title+'\n'
     }   
   }
   fs.writeFile('images/names.txt', namestxt, function (err) {
     if (err) return console.log(err);
     fs.writeFile('images/index.txt', indextxt, function (err) {
       if (err) return console.log(err);
-      process.exit(1)
+      summary()
     });
   });
 
 }
-
+function summary(){
+  for (var i=0; i<classList.length; i++){
+    console.log(i+' '+classList[i].name+' | '+classList[i].imageLoaded + ' images loaded')
+  }
+  process.exit(1)
+}
 class bboxDownload {
 
   constructor(image_path,loc,id,url,name) {
@@ -103,6 +112,7 @@ class bboxDownload {
     this.errors = 0;
     this.listLoaded = false
     this.listRequested = false
+    console.log('name'+name)
   }
   start(){
     this.started = true
@@ -202,7 +212,7 @@ class bboxDownload {
         }
         if (numberOfRequests==0){
           rimraf(parent.loc, function () { 
-            console.log('remove '+parent.loc) 
+            //console.log('remove '+parent.loc) 
             parent.alldone = true
           });
 
@@ -225,7 +235,7 @@ class bboxDownload {
     //request.head(url,(err, res, body) => {
       var r = request(url,{timeout: 60000})
         r.on('response', function (res) {
-          console.log(res.statusCode);
+          //console.log(res.statusCode);
           if (res.statusCode === 200) {
             r.pipe(fs.createWriteStream(path))
             parent.imageLoaded++
@@ -244,7 +254,7 @@ class bboxDownload {
         r.on('error', function (res) {
           parent.outCalls--
           parent.errors++
-          console.log(res)
+          //console.log(res)
           if (parent.outCalls==0){
             //console.log('done')
             
@@ -277,7 +287,7 @@ class bboxDownload {
   }
 }
 
-const download_image = (url, image_path,zip,loc,id, name) =>
+const download_image = (url, image_path,zip,loc,id, name,realName) =>
     axios({
       url,
       responseType: 'stream',
@@ -286,7 +296,7 @@ const download_image = (url, image_path,zip,loc,id, name) =>
         new Promise((resolve, reject) => {
           //console.log(url+' / '+id)
           if (zip==true){ 
-            b = new bboxDownload(image_path,loc,id,url,name);
+            b = new bboxDownload(image_path,loc,id,url,realName);
             classList.push(b)
           }
           response.data
@@ -368,7 +378,7 @@ function getClasses(cat,level){
                       fs.mkdirSync(dir, { recursive: true });
                       fs.mkdirSync(dir+'/images', { recursive: true });
                       
-                      console.log(catCounter+' '+name)
+                      //console.log(catCounter+' '+name)
                       downloadXML(url,dir,id,name)
                       catNames.push(name)
                       catCounter++
@@ -400,7 +410,7 @@ function downloadXML(url,target,id,name){
     body = body[1]
     body = body.split('"')
     body = body[0]
-
+    
     download_image('http://www.image-net.org/'+body, target+'/bbox.tar.gz',true,target,id,url,name)
   });
 }
