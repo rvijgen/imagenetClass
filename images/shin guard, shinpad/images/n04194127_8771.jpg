@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+
+  <head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>
+      StreamStore Cloud - Signup    </title>
+
+              <style type="text/css">
+      body{
+        background:#FFF !important;
+      }
+      .user-pass-wrap{
+        padding:0 25px !important;
+      }
+      p#nav a:first-child{
+        display:none;
+      }
+  </style>
+<style>
+      .login h1 a {
+        background-image: url('https://streamstorecloud.com/wp-content/uploads/2019/11/small.png') !important;
+        width: 320px !important;
+        background-size: 70% !important;
+      }
+    </style><link rel="icon" href="https://streamstorecloud.com/wp-content/uploads/2019/11/ico-39x38.png" sizes="32x32" />
+<link rel="icon" href="https://streamstorecloud.com/wp-content/uploads/2019/11/ico.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://streamstorecloud.com/wp-content/uploads/2019/11/ico.png" />
+<meta name="msapplication-TileImage" content="https://streamstorecloud.com/wp-content/uploads/2019/11/ico.png" />
+    <script type='text/javascript' src='https://streamstorecloud.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://streamstorecloud.com/wp-content/plugins/wp-ultimo//inc/setup/js/jquery.blockUI.js?ver=1.10.12' id='jquery-blockui-js'></script>
+<script type='text/javascript' src='https://streamstorecloud.com/wp-includes/js/underscore.min.js?ver=1.8.3' id='underscore-js'></script>
+<script type='text/javascript' src='https://streamstorecloud.com/wp-includes/js/backbone.min.js?ver=1.4.0' id='backbone-js'></script>
+<script type='text/javascript' src='https://streamstorecloud.com/wp-includes/js/imagesloaded.min.js?ver=4.1.4' id='imagesloaded-js'></script>
+<script type='text/javascript' src='https://streamstorecloud.com/wp-includes/js/masonry.min.js?ver=4.2.2' id='masonry-js'></script>
+<script type='text/javascript' src='https://streamstorecloud.com/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4' id='jquery-ui-core-js'></script>
+<script type='text/javascript' src='https://streamstorecloud.com/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4' id='jquery-ui-widget-js'></script>
+<script type='text/javascript' src='https://streamstorecloud.com/wp-includes/js/jquery/ui/mouse.min.js?ver=1.11.4' id='jquery-ui-mouse-js'></script>
+<script type='text/javascript' src='https://streamstorecloud.com/wp-includes/js/jquery/ui/sortable.min.js?ver=1.11.4' id='jquery-ui-sortable-js'></script>
+<script type='text/javascript' src='https://streamstorecloud.com/wp-includes/js/jquery/ui/datepicker.min.js?ver=1.11.4' id='jquery-ui-datepicker-js'></script>
+<script type='text/javascript' id='wp-ultimo-js-extra'>
+/* <![CDATA[ */
+var wpu = {"currency_symbol":"$","currency_position":"%s %v","decimal_separator":".","thousand_separator":",","precision":"2","datepicker_locale":"en","server_clock_start":"1606211692","server_clock_offset":"0","currency_placeholder":"$ 0.00","delete_plan_title":"Are you sure?","delete_plan_confirm":"Yes, I'm sure","delete_plan_cancel":"Cancel","delete_plan_text":"Are you sure you want to delete this plan? All the users of this plan will become become plan-less and have no limitations applied to their accounts. You can't undo this action."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://streamstorecloud.com/wp-content/plugins/wp-ultimo/assets/js/scripts.min.js?ver=1.10.12' id='wp-ultimo-js'></script>
+<script type='text/javascript' src='https://streamstorecloud.com/wp-content/plugins/wp-ultimo/assets/js/wu-pricing-table.min.js?ver=1.10.12' id='wu-pricing-table-js'></script>
+    <link rel='stylesheet' id='dashicons-css'  href='https://streamstorecloud.com/wp-includes/css/dashicons.min.css?ver=5.5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='admin-bar-css'  href='https://streamstorecloud.com/wp-includes/css/admin-bar.min.css?ver=5.5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='buttons-css'  href='https://streamstorecloud.com/wp-includes/css/buttons.min.css?ver=5.5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='forms-css'  href='https://streamstorecloud.com/wp-admin/css/forms.min.css?ver=5.5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='l10n-css'  href='https://streamstorecloud.com/wp-admin/css/l10n.min.css?ver=5.5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='install-css'  href='https://streamstorecloud.com/wp-admin/css/install.min.css?ver=5.5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wu-signup-css'  href='https://streamstorecloud.com/wp-content/plugins/wp-ultimo/assets/css/wu-signup.min.css?ver=5.5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wu-login-css'  href='https://streamstorecloud.com/wp-content/plugins/wp-ultimo/assets/css/wu-login.min.css?ver=1.10.12' type='text/css' media='all' />
+<link rel='stylesheet' id='wu-grid-css'  href='https://streamstorecloud.com/wp-content/plugins/wp-ultimo/assets/css/wu-grid.min.css?ver=1.10.12' type='text/css' media='all' />
+<link rel='stylesheet' id='themes-css'  href='https://streamstorecloud.com/wp-admin/css/themes.min.css?ver=5.5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wu-shortcodes-css'  href='https://streamstorecloud.com/wp-content/plugins/wp-ultimo/assets/css/wu-shortcodes.min.css?ver=1.10.12' type='text/css' media='all' />
+<link rel='stylesheet' id='common-css'  href='https://streamstorecloud.com/wp-admin/css/common.min.css?ver=5.5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wu-dynamic-styles-css'  href='https://streamstorecloud.com/wp-content/plugins/wp-ultimo/assets/css/wu-dynamic-styles.min.css?ver=5.5.3' type='text/css' media='all' />
+<style id='wu-dynamic-styles-inline-css' type='text/css'>
+ 
+</style>
+<link rel='stylesheet' id='wu-pricing-table-css'  href='https://streamstorecloud.com/wp-content/plugins/wp-ultimo/assets/css/wu-pricing-table.min.css?ver=1.10.12' type='text/css' media='all' />
+<link rel='stylesheet' id='ame-helper-style-css'  href='https://streamstorecloud.com/wp-content/plugins/admin-menu-editor-pro/css/admin.css?ver=20140630-3' type='text/css' media='all' />
+<link rel='stylesheet' id='ame-force-dashicons-css'  href='https://streamstorecloud.com/wp-content/plugins/admin-menu-editor-pro/css/force-dashicons.css?ver=20190810' type='text/css' media='all' />
+    
+    <style>
+
+
+
+	body.toplevel_page_fs-poster,
+	body.fs-poster_page_fs-poster-posts,
+	body.fs-poster_page_fs-poster-insights,
+	body.fs-poster_page_fs-poster-settings{
+
+	}
+
+
+	a[href*="fs-poster-schedule"],
+	a[href*="fs-poster-app"],
+	a[href*="fs-poster-share"]
+	{ 
+		display: none !important;
+	}
+
+	.modal.fsCodeModal{
+		max-width:100%;
+	}
+
+
+	</style>	
+	<style>
+		body.toplevel_page_fs-poster,
+		#toplevel_page_fs-poster{
+			display:none;
+		}
+		</style><style>
+
+
+	  </style><style>
+	body.index-php .wrap > h1,
+	#wpfooter,
+	.editor-page-attributes__parent,
+	#welcome-panel,
+	.user-rich-editing-wrap,
+	.user-syntax-highlighting-wrap,
+	.user-admin-color-wrap,
+	.user-comment-shortcuts-wrap,
+	.user-url-wrap,
+	.user-description-wrap,
+	#wp-ultimo-actions,
+	#wu-mb-billing-history,
+	#wp-ultimo-status,
+	.widget-content textarea,
+	#wp-ultimo-change-plan{
+		display:none;
+	}
+	div.widgets-sortables#footr-sidebar{border:0}
+	body.options-reading-php table tr{display:none}
+	body.options-reading-php table tr.option-site-visibility{display:block}
+	</style>	
+	<style>
+		
+			#toplevel_page_wpw-auto-poster-settings{
+				display:none;
+			}
+		</style><style>
+	  			body.my-sites-php a.page-title-action,
+	  			#wu-mb-sites-lists,
+			  	#menu-dashboard ul li:nth-child(3),
+			  	#menu-dashboard ul li:nth-child(4){
+				  display:none;
+			  }
+
+	  </style>
+  </head>
+
+  <body class="login wp-core-ui">
+
+    <div class="wu-setup">
+
+    
+      <div id="login">
+
+        <h1 id="wu-setup-logo">
+          <a href="https://streamstorecloud.com">
+            StreamStore Cloud - Signup          </a>
+        </h1>
+
+        
+
+<style>
+
+  .wu-content-plan .plan-tier h4 {
+    background-color: #00a1ff;
+    color: white !important;
+  }
+
+  .wu-content-plan .plan-tier.callout h6 {
+    background-color: #78b336;
+    color: rgba(39,65,90,.5) !important;
+  }
+
+  .wu-content-plan .plan-tier.callout h4 {
+    background-color: #6da331;
+    color: #333 !important;
+  }
+
+</style>
+
+<div class="wu-setup-content wu-content-plan">
+
+
+
+  <form id="signupform" method="post">
+
+    
+        
+      <input type="hidden" name="wu_action" value="wu_new_user">
+      <input type="hidden" id="wu_plan_freq" name="plan_freq" value="1">
+
+    
+    <input type="hidden" name="save_step" value="1">
+
+    <input type="hidden" id="_signup_form" name="_signup_form" value="bb0c3ebc3b" /><input type="hidden" name="_wp_http_referer" value="/wp-signup.php?new=www.wingchunbooks.com&amp;step=plan&amp;cs=5fbcd86ad6a214.55618322" />
+    <!-- if this is a change plan, let us know -->
+    
+      
+    <div class="layer plans">
+
+      
+
+<div id="plan-67" data-plan="67"  data-price-1='Free!' data-price-3='Free!' data-price-12='Free!' class="lift wu-plan plan-tier  wu-col-sm-12 wu-col-xs-12">
+
+  
+  <h4 class="wp-ui-primary">Welcome to StreamStore Cloud</h4>
+
+  <!-- Price -->
+  
+    <h5>
+      <span class="plan-price">Free!</span>
+    </h5>
+
+    <!-- end Price -->
+
+  <p class="early-adopter-price">&nbsp;</p><br>
+
+
+  <!-- Feature List Begins -->
+  <ul>
+
+    <li class='total-price total-price-3'>-</li><li class='total-price total-price-12'>-</li>
+      <li>In the next step you will need to choose your "store name" and a sub-domain for your store.</li>
+
+    
+      <li><em>( You will always be able to change this "store name" and to add you own domain to your store). </em></li>
+
+    
+      <li>Finally you will register your account to create your credentials to access to your dashboard anytime.</li>
+
+    
+    
+    
+      <li class="wu-cta">
+        <button type="submit" name="plan_id" class="button button-primary button-next" value="67" >
+          Select Plan        </button>
+      </li>
+
+    
+  </ul>
+  <!-- Feature List Begins -->
+
+</div>
+      <div style="clear: both"></div>
+
+    </div>
+
+  </form>
+  
+
+</div>
+
+
+
+<script type="text/javascript">
+
+  (function ($) {
+    $(document).ready(function () {
+      /**
+       * Select the default pricing option
+       */
+      setTimeout(function() {
+        $('[data-frequency-selector="1"]').click();
+      }, 100);
+
+    });
+  })(jQuery);
+
+</script>
+        
+
+
+      </div> <!-- /login -->
+
+      
+
+<ol class="wu-setup-steps">
+
+  
+    <li style="width: 33.333333333333%;" class="active">
+
+      Pick a Plan
+    </li>
+
+  
+    <li style="width: 33.333333333333%;" class="">
+
+      Site Details
+    </li>
+
+  
+    <li style="width: 33.333333333333%;" class="">
+
+      Account Details
+    </li>
+
+  
+</ol>
+
+
+      
+      <script type="text/javascript">$csj = jQuery.noConflict();_IPIDO_ADMIN.settings = $csj.extend(true,_IPIDO_ADMIN.settings, {"general":{"plugin_name":"ipido_admin","plugin_version":"1.0.1","body_scrollbar":false,"wp_is_mobile":false,"is_multisite":true,"is_network_admin":false,"is_super_admin":false,"sidebar_status":"collapsed"},"logo":{"status":false,"url":"https:\/\/streamstorecloud.com\/wp-admin\/","type":"image","image":"https:\/\/streamstorecloud.com\/wp-content\/uploads\/2019\/11\/small.png","collapsed":"https:\/\/streamstorecloud.com\/wp-content\/uploads\/2019\/11\/44.png","icon":"cli cli-zap","text":"IPIDO"},"navbar":{"help":false,"help_title":"Help","screen":false,"screen_title":"Screen Options","notifications":false,"notifications_title":"Notifications","site":true,"site_title":"View Live Site","updates":false,"comments":false,"newcontent":false,"account":true,"networksites":false,"networksites_title":"View Network Sites","flexiblespace":true,"pagetitle":false,"sidebartoggle":true,"tooltips":false,"order":["sidebartoggle","site","flexiblespace","account"],"position":"fixed","unify":false,"sidebartoggle_button":false},"notifications":{"status":false,"duration":null},"adminmenu":{"status":false,"accordion":false,"scrollbar":false,"brand_position":false,"position":false}});</script>
+    </div>
+
+  </body>
+
+</html>

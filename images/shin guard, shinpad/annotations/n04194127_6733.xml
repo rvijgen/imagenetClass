@@ -1,0 +1,37 @@
+<annotation>
+	<folder>n04194127</folder>
+	<filename>n04194127_6733</filename>
+	<source>
+		<database>ImageNet database</database>
+	</source>
+	<size>
+		<width>375</width>
+		<height>500</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>n04194127</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>208</xmin>
+			<ymin>246</ymin>
+			<xmax>272</xmax>
+			<ymax>331</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>n04194127</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>150</xmin>
+			<ymin>251</ymin>
+			<xmax>197</xmax>
+			<ymax>328</ymax>
+		</bndbox>
+	</object>
+</annotation>
