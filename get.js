@@ -33,8 +33,8 @@ var activeClass = 0;
 var arguments = process.argv.slice(2);
 maxNum = arguments[0]
 
-setInterval(function(){ 
-  console.clear()
+var display = setInterval(function(){ 
+  //console.clear()
   // alldone = true;
   // for (var i=0; i<classList.length; i++){
   //     if (classList[i].alldone==false)alldone=false
@@ -61,9 +61,12 @@ setInterval(function(){
     }
   }
   
-}, 100);
+}, 1000);
 
 function buildIndexes(){
+  fs.mkdirSync('class/images', { recursive: true });
+  fs.mkdirSync('class/annotations', { recursive: true });
+  clearInterval(display)
   console.log('build index')
   namestxt='';
   indextxt='';
@@ -74,9 +77,9 @@ function buildIndexes(){
       indextxt+=title+'\n'
     }   
   }
-  fs.writeFile('images/names.txt', namestxt, function (err) {
+  fs.writeFile('class/names.txt', namestxt, function (err) {
     if (err) return console.log(err);
-    fs.writeFile('images/index.txt', indextxt, function (err) {
+    fs.writeFile('class/index.txt', indextxt, function (err) {
       if (err) return console.log(err);
       summary()
     });
@@ -87,7 +90,39 @@ function summary(){
   for (var i=0; i<classList.length; i++){
     console.log(i+' '+classList[i].name+' | '+classList[i].imageLoaded + ' images loaded')
   }
-  process.exit(1)
+  copyFiles()
+  
+}
+function copyFiles(){
+  
+  for (var i=0; i<classList.length; i++){
+    folder = classList[i].loc
+    console.log(folder+'/annotations')
+    fs.readdir(folder+'/annotations/', function (err, files) {
+      if (files!=undefined){
+        if (files.length>0){
+          for(i=0; i<files.length; i++) {
+            file = files[i]
+            fs.move(folder+'/annotations/'+file, 'class/annotations/'+file, function (err) {
+            });
+          } 
+        }
+      }
+    })
+    fs.readdir(folder+'/images/', function (err, files) {
+      if (files!=undefined){
+        if (files.length>0){
+          for(i=0; i<files.length; i++) {
+            file = files[i]
+            fs.move(folder+'/images/'+file, 'class/images/'+file, function (err) {
+            });
+          } 
+        }
+      }
+    })
+
+  }
+  //process.exit(1)
 }
 class bboxDownload {
 
@@ -315,12 +350,12 @@ start();
        
 function start(){
   lineReader.eachLine('data/worldlist.txt', function(line, last) {
-
+    
     data = line.split('\t');
     wordList.push({'name':data[1],'id':data[0]})
 
     if(last){
-        //console.log(wordList.length)
+        
         getBboxList()
         
     }
@@ -354,6 +389,7 @@ function getBboxList(){
 function getClasses(cat,level){
     //console.log(cat)
     loopCounter++
+    console.log('http://www.image-net.org/api/text/wordnet.structure.hyponym?wnid='+cat)
     request('http://www.image-net.org/api/text/wordnet.structure.hyponym?wnid='+cat, { json: false }, (err, res, body) => {
         if (err) { return console.log(err); }
         result = body.split(/\r?\n/)
