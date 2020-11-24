@@ -27,7 +27,7 @@ var catNames = new Array();
 var extractMonitor = new Array();
 var classList = new Array();
 var labelList = new Array();
-var maxNum = 10;
+var maxNum = 100;
 var activeClass = 0;
 setInterval(function(){ 
   console.clear()
