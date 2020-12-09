@@ -17,7 +17,7 @@ var tar = require('tar-fs')
 var catCounter = 0;
 var targz = require('tar.gz');
 
-cat = 'n03051540';
+cat = 'n00017222';
 var wordList = new Array();;
 var bboxList = new Array();;
 var bboxNum = 0;
@@ -32,65 +32,79 @@ var activeClass = 0;
 
 var arguments = process.argv.slice(2);
 maxNum = arguments[0]
-
+var dodisplay = true
 var display = setInterval(function(){ 
-  console.clear()
-  // alldone = true;
-  // for (var i=0; i<classList.length; i++){
-  //     if (classList[i].alldone==false)alldone=false
-  //     console.log(classList[i].loc+' | '+classList[i].imageCounter+' requested, '+classList[i].outCalls +' open requests ' +classList[i].imageLoaded+' downloaded | '+classList[i].fileCounter+' bbox | '+classList[i].errors+' timeouts')
-  // }
-  // if(alldone&&classList.length>0){
-  //   console.log('alldone!')
-  //   buildIndexes()
-  // } 
-  if (classList.length>0){
-    currentObject = classList[activeClass]
-    if (currentObject.started==false)currentObject.start()
-    else if (currentObject.alldone==true){
-      //console.log('object '+activeClass+' completed')
-      if (activeClass<classList.length-1)activeClass++
-      else{
-        console.log('all done')
-        buildIndexes()
+  if (dodisplay==true){
+    console.clear()
+    // alldone = true;
+    // for (var i=0; i<classList.length; i++){
+    //     if (classList[i].alldone==false)alldone=false
+    //     console.log(classList[i].loc+' | '+classList[i].imageCounter+' requested, '+classList[i].outCalls +' open requests ' +classList[i].imageLoaded+' downloaded | '+classList[i].fileCounter+' bbox | '+classList[i].errors+' timeouts')
+    // }
+    // if(alldone&&classList.length>0){
+    //   console.log('alldone!')
+    //   buildIndexes()
+    // } 
+    if (classList.length>0){
+      currentObject = classList[activeClass]
+      if (currentObject.started==false)currentObject.start()
+      else if (currentObject.alldone==true){
+        //console.log('object '+activeClass+' completed')
+        if (activeClass<classList.length-1)activeClass++
+        else{
+          console.log('all done')
+          buildIndexes()
+        }
+      }else{
+        classCount = activeClass+1
+        console.log('downloading class '+classCount+' of '+classList.length )
+        console.log(currentObject.loc+' | '+currentObject.imageCounter+' requested, '+currentObject.outCalls +' open requests ' +currentObject.imageLoaded+' downloaded | '+currentObject.fileCounter+' bbox | '+currentObject.errors+' timeouts | listLoaded: '+currentObject.listLoaded+' requested: '+currentObject.listLoaded)
       }
-    }else{
-      classCount = activeClass+1
-      console.log('downloading class '+classCount+' of '+classList.length )
-      console.log(currentObject.loc+' | '+currentObject.imageCounter+' requested, '+currentObject.outCalls +' open requests ' +currentObject.imageLoaded+' downloaded | '+currentObject.fileCounter+' bbox | '+currentObject.errors+' timeouts | listLoaded: '+currentObject.listLoaded+' requested: '+currentObject.listLoaded)
     }
+    
   }
   
 }, 100);
 
 function buildIndexes(){
-  fs.mkdirSync('class/images', { recursive: true });
-  fs.mkdirSync('class/annotations', { recursive: true });
+  // fs.mkdirSync('class/images', { recursive: true });
+  // fs.mkdirSync('class/annotations', { recursive: true });
   clearInterval(display)
   console.log('build index')
   namestxt='';
   indextxt='';
+  var exportList = new Array()
   for (var i=0; i<classList.length; i++){
     if (classList[i].imageLoaded>0){
       namestxt+=classList[i].id+'\n'
       var title = classList[i].name
       indextxt+=title+'\n'
+      exportList.push({id:classList[i].id,name:classList[i].name,itemsLoaded:classList[i].imageLoaded})
     }   
   }
-  fs.writeFile('class/names.txt', namestxt, function (err) {
-    if (err) return console.log(err);
-    fs.writeFile('class/index.txt', indextxt, function (err) {
-      if (err) return console.log(err);
-      summary()
-    });
-  });
+  
+  var body__ = JSON.stringify(exportList);
+  fs.writeFileSync('images/classList.json', body__);
+  summary()
+
+  // fs.writeFile('class/names.txt', namestxt, function (err) {
+  //   if (err) return console.log(err);
+  //   fs.writeFile('class/index.txt', indextxt, function (err) {
+  //     if (err) return console.log(err);
+  //     summary()
+  //   });
+  // });
 
 }
 function summary(){
+
   for (var i=0; i<classList.length; i++){
     console.log(i+' '+classList[i].name+' | '+classList[i].imageLoaded + ' images loaded')
   }
-  copyFiles()
+  //console.log(classList)
+  //var body__ = JSON.stringify(classList);
+  //fs.writeFileSync('images/classList.json', body__);
+  //copyFiles()
   
 }
 function copyFiles(){
@@ -359,7 +373,7 @@ function start(){
     wordList.push({'name':data[1],'id':data[0]})
 
     if(last){
-        
+        console.log('wordlist loaded')
         getBboxList()
         
     }
@@ -384,6 +398,7 @@ function getBboxList(){
 
     if(last){
         //console.log('xList')
+        console.log('bboxlist loaded')
         getClasses(cat,0)
     }
   });
@@ -393,10 +408,13 @@ function getBboxList(){
 function getClasses(cat,level){
     //console.log(cat)
     loopCounter++
+   
     //console.log('http://www.image-net.org/api/text/wordnet.structure.hyponym?wnid='+cat)
     request('http://www.image-net.org/api/text/wordnet.structure.hyponym?wnid='+cat, { json: false }, (err, res, body) => {
         if (err) { return console.log(err); }
         result = body.split(/\r?\n/)
+        var endpoint = false
+        if (result.length==2)endpoint=true
         
         for(var i=0; i<result.length; i++){
             id = result[i].substring(1);
@@ -412,14 +430,19 @@ function getClasses(cat,level){
                   
                   if (bboxName==name){
                     //item exists as bbox
-                    //console.log(bboxName)
+                    //console.log(endpoint)
                     dir = 'images/'+id
-
+                    
                     if (catCounter<maxNum&&!catExists(name)){
+
+                      if (endpoint==true){
+                        console.log('endpoint '+name)
+                      }
                       fs.mkdirSync(dir, { recursive: true });
                       fs.mkdirSync(dir+'/images', { recursive: true });
                       
-                      //console.log(catCounter+' '+name)
+                      console.log(catCounter+' '+name+' '+result.length)
+
                       downloadXML(url,dir,id,name)
                       catNames.push(name)
                       catCounter++
